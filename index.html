@@ -3,32 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bill-Generate</title>
+    <title>Bill Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="card">
-            <div class="card-body-pt-0">
-                <!-- header -->
-                <nav class=" p-0 mb-3 navbar-light bg-light">
-                    <div class="heaing-text">
-                        <p>Billing System</p>
-                    </div>
-                </nav>
+    <div class="container">
+        <h2>Bill Generator</h2>
+        <form id="bill-form">
+            <label for="item">Item Name:</label>
+            <input type="text" id="item" name="item" required>
+            
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required>
+            
+            <label for="price">Price per Item:</label>
+            <input type="number" id="price" name="price" required>
+            
+            <button type="button" onclick="addItem()">Add Item</button>
+        </form>
 
-
-                    <!-- product Information -->
-
-                    <div class="row">
-                        <div class=" px-0 from-container card-height">
-                            <label class="label-text">Product Information</label>
-                        </div>
-
-                    </div>
-            </div>
-
-        </div>
+        <h3>Bill Details</h3>
+        <table id="bill-table">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Price per Item</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <h4>Total Amount: <span id="total-amount">0</span></h4>
     </div>
+
+    <script>
+        let totalAmount = 0;
+
+        function addItem() {
+            const item = document.getElementById('item').value;
+            const quantity = document.getElementById('quantity').value;
+            const price = document.getElementById('price').value;
+            const total = quantity * price;
+
+            const table = document.getElementById('bill-table').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+
+            newRow.insertCell(0).innerText = item;
+            newRow.insertCell(1).innerText = quantity;
+            newRow.insertCell(2).innerText = price;
+            newRow.insertCell(3).innerText = total;
+
+            totalAmount += total;
+            document.getElementById('total-amount').innerText = totalAmount;
+
+            document.getElementById('bill-form').reset();
+        }
+    </script>
 </body>
 </html>
